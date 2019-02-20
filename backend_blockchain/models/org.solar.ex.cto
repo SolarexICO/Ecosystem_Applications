@@ -1,0 +1,104 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+namespace org.solar.ex
+
+asset Gig identified by gigId {
+  o String gigId
+  o String title
+  o String description
+  o String location optional
+  o Double energy
+  o Double price
+  --> Seller seller
+}
+
+enum GigState {
+  o ACTIVE
+  o INACTIVE 
+}
+
+asset Contract identified by contractId {
+  o String contractId
+  o Double energy
+  o Double price
+  o ContractState contractState default="SELLER_REQUESTED"
+  --> Buyer buyer
+  --> Seller seller
+}
+
+enum ContractState {
+  o SELLER_REQUESTED
+  o SELLER_ACCEPTED
+  o SELLER_REJECTED
+  o CONTRACT_CONSUMED 
+}
+
+abstract participant User identified by email {
+  o String email
+  o String name
+  o String password
+}
+
+participant Buyer extends User {
+  o Double tokens
+  o Double energy
+  o Double energyConsumed
+  o String image optional
+  o String location optional
+}
+
+participant Seller extends User {
+  o Double tokens
+  o Double energy
+  o Double energySold
+  o String image optional
+  o String location optional
+}
+
+participant Admin extends User {
+
+}
+
+transaction AcceptContract {
+  --> Contract contract
+  --> Seller seller
+}
+
+transaction RejectContract {
+  --> Contract contract
+  --> Seller seller
+}
+
+transaction ConsumeContract {
+  --> Contract contract
+  --> Buyer buyer
+}
+
+transaction UpdateEnergy {
+  o Double energy
+  --> Buyer buyer optional
+  --> Seller seller optional
+}
+
+transaction AddTokens {
+  o Double tokens
+  --> Buyer buyer optional
+  --> Seller seller optional
+  --> Admin admin optional
+}

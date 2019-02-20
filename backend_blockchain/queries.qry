@@ -1,0 +1,67 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+
+/*
+query selectJobsByJobState {
+  description: "Select all Jobs based on their JobState"
+  statement:
+      SELECT org.solar.ex.Job
+          WHERE (jobState == _$jobState)
+}
+
+query selectJobsByBidState {
+  description: "Select all Jobs based on their bidState"
+  statement:
+      SELECT org.solar.ex.Job
+          WHERE (bidState == _$bidState)
+}
+
+query selectProjectByState {
+  description: "Select all Project based on their State"
+  statement:
+      SELECT org.solar.ex.Project
+          WHERE (state == _$state)
+}
+*/
+
+
+query AuthenticateSeller {
+  description: "Authenticate Sellers"
+  statement:
+      SELECT org.solar.ex.Seller
+          WHERE ((email == _$email) AND (password == _$password))
+}
+
+query AuthenticateBuyer {
+  description: "Authenticate Buyers"
+  statement:
+      SELECT org.solar.ex.Buyer
+          WHERE ((email == _$email) AND (password == _$password))
+}
+
+query AuthenticateAdmin {
+  description: "Authenticate Admins"
+  statement:
+      SELECT org.solar.ex.Admin
+          WHERE ((email == _$email) AND (password == _$password))
+}
+
+query selectContractByContractState {
+  description: "Select all Contracts based on their ContractState"
+  statement:
+      SELECT org.solar.ex.Contract
+          WHERE (contractState == _$contractState)
+}
